@@ -61,7 +61,9 @@ const nextjsArtifactFromBuildOptions: NextjsArtifactFromBuildOptions = { ... }
 
 - *Type:* `string`[]
 
-The command to build nextjs's .next directory.  i.e., ['yarn', 'build'] or ['yarn', 'next', 'build'].
+The command to build nextjs's .next directory.
+
+i.e., ['yarn', 'build'] or ['yarn', 'next', 'build']
 
 ---
 
