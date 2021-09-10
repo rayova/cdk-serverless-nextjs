@@ -1,8 +1,12 @@
 {
   "name": "@rayova/cdk-serverless-nextjs",
+  "description": "Deploy Serverless Next.js on Lambda @ Edge with the AWS CDK",
   "repository": {
     "type": "git",
     "url": "https://github.com/rayova/cdk-serverless-nextjs.git"
+  },
+  "bin": {
+    "build-serverless-nextjs.js": "bin/build-serverless-nextjs.js"
   },
   "scripts": {
     "clobber": "npx projen clobber",
@@ -94,13 +98,23 @@
     "fs-extra"
   ],
   "keywords": [
-    "cdk"
+    "cdk",
+    "cloudfront",
+    "isr",
+    "lambda",
+    "next",
+    "react",
+    "serverless",
+    "ssr"
   ],
   "engines": {
     "node": ">= 12.13.0"
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "0.0.0",
   "jest": {
     "testMatch": [
