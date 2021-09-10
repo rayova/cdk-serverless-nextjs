@@ -86,6 +86,9 @@
         },
         {
           "spawn": "package"
+        },
+        {
+          "spawn": "readme-macros"
         }
       ]
     },
@@ -112,8 +115,8 @@
       "description": "Bumps version based on latest git tag and generates a changelog entry",
       "env": {
         "OUTFILE": "package.json",
-        "CHANGELOG": "dist\\changelog.md",
-        "BUMPFILE": "dist\\version.txt"
+        "CHANGELOG": "dist/changelog.md",
+        "BUMPFILE": "dist/version.txt"
       },
       "steps": [
         {
@@ -127,8 +130,8 @@
       "description": "Restores version to 0.0.0",
       "env": {
         "OUTFILE": "package.json",
-        "CHANGELOG": "dist\\changelog.md",
-        "BUMPFILE": "dist\\version.txt"
+        "CHANGELOG": "dist/changelog.md",
+        "BUMPFILE": "dist/version.txt"
       },
       "steps": [
         {
@@ -136,42 +139,34 @@
         }
       ]
     },
-    "upgrade-dependencies": {
-      "name": "upgrade-dependencies",
+    "publish:github": {
+      "name": "publish:github",
+      "description": "Publish this package to GitHub Releases",
+      "requiredEnv": [
+        "GITHUB_TOKEN",
+        "GITHUB_REPOSITORY"
+      ],
+      "steps": [
+        {
+          "exec": "errout=$(mktemp); gh release create v$(cat dist/version.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t v$(cat dist/version.txt) 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \"Release.tag_name already exists\" $errout; then cat $errout; exit $exitcode; fi"
+        }
+      ]
+    },
+    "upgrade": {
+      "name": "upgrade",
       "description": "upgrade dependencies",
       "env": {
         "CI": "0"
       },
       "steps": [
         {
-          "exec": "npm-check-updates --upgrade --target=minor --reject='projen'"
+          "exec": "npm-check-updates --upgrade --target=minor"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @aws-cdk/assert @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema npm-check-updates standard-version ts-jest typescript constructs"
-        },
-        {
-          "exec": "npx projen"
-        }
-      ]
-    },
-    "upgrade-projen": {
-      "name": "upgrade-projen",
-      "description": "upgrade projen",
-      "env": {
-        "CI": "0"
-      },
-      "steps": [
-        {
-          "exec": "npm-check-updates --upgrade --target=minor --filter='projen'"
-        },
-        {
-          "exec": "yarn install --check-files"
-        },
-        {
-          "exec": "yarn upgrade projen"
+          "exec": "yarn upgrade"
         },
         {
           "exec": "npx projen"
@@ -224,7 +219,7 @@
     },
     "publish:npm": {
       "name": "publish:npm",
-      "description": "Publish this package to the npm Registry",
+      "description": "Publish this package to npm",
       "env": {
         "NPM_DIST_TAG": "latest",
         "NPM_REGISTRY": "registry.npmjs.org"
@@ -244,6 +239,20 @@
       "steps": [
         {
           "exec": "jsii-docgen"
+        }
+      ]
+    },
+    "readme-macros": {
+      "name": "readme-macros",
+      "steps": [
+        {
+          "exec": "shx mv README.md README.md.bak"
+        },
+        {
+          "exec": "shx cat README.md.bak | markmac > README.md"
+        },
+        {
+          "exec": "shx rm README.md.bak"
         }
       ]
     },

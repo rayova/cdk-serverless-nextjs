@@ -1,8 +1,11 @@
 {
-  "name": "cdk-serverless-nextjs",
+  "name": "@rayova/cdk-serverless-nextjs",
   "repository": {
     "type": "git",
-    "url": "https://github.com/joshkellendonk/cdk-serverless-nextjs.git"
+    "url": "https://github.com/rayova/cdk-serverless-nextjs.git"
+  },
+  "bin": {
+    "build-serverless-nextjs.js": "bin/build-serverless-nextjs.js"
   },
   "scripts": {
     "clobber": "npx projen clobber",
@@ -14,8 +17,8 @@
     "test:update": "npx projen test:update",
     "bump": "npx projen bump",
     "unbump": "npx projen unbump",
-    "upgrade-dependencies": "npx projen upgrade-dependencies",
-    "upgrade-projen": "npx projen upgrade-projen",
+    "publish:github": "npx projen publish:github",
+    "upgrade": "npx projen upgrade",
     "default": "npx projen default",
     "watch": "npx projen watch",
     "package": "npx projen package",
@@ -23,21 +26,35 @@
     "compat": "npx projen compat",
     "publish:npm": "npx projen publish:npm",
     "docgen": "npx projen docgen",
+    "readme-macros": "npx projen readme-macros",
     "release": "npx projen release",
     "projen": "npx projen",
-    "start": "npx projen start"
+    "integ:main": "cdk --app \"ts-node -P tsconfig.jest.json test/integ.main.lit.ts\""
   },
   "author": {
     "name": "Josh Kellendonk",
-    "email": "joshkellendonk@gmail.com",
+    "email": "josh@rayova.com",
     "organization": false
   },
   "devDependencies": {
     "@aws-cdk/assert": "^1.95.2",
+    "@aws-cdk/aws-cloudfront": "^1.95.2",
+    "@aws-cdk/aws-cloudfront-origins": "^1.95.2",
+    "@aws-cdk/aws-iam": "^1.95.2",
+    "@aws-cdk/aws-lambda": "^1.95.2",
+    "@aws-cdk/aws-lambda-event-sources": "^1.95.2",
+    "@aws-cdk/aws-s3": "^1.95.2",
+    "@aws-cdk/aws-s3-deployment": "^1.95.2",
+    "@aws-cdk/aws-sqs": "^1.95.2",
+    "@aws-cdk/core": "^1.95.2",
+    "@sls-next/lambda-at-edge": "latest",
+    "@types/fs-extra": "^9.0.12",
     "@types/jest": "^27.0.1",
-    "@types/node": "^10.17.0",
+    "@types/node": "^12.0.0",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
+    "@wheatstalk/lit-snip": "^0.0",
+    "aws-cdk": "^1.122.0",
     "eslint": "^7.32.0",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-import-resolver-typescript": "^2.4.0",
@@ -49,19 +66,42 @@
     "jsii-docgen": "^3.4.8",
     "jsii-pacmak": "^1.34.0",
     "json-schema": "^0.3.0",
+    "markmac": "^0.1",
     "npm-check-updates": "^11",
     "projen": "^0.27.51",
+    "shx": "^0.3.3",
     "standard-version": "^9",
     "ts-jest": "^27.0.5",
-    "typescript": "^4.4.2"
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2",
+    "yargs": "^17.1.1"
   },
   "peerDependencies": {
+    "@aws-cdk/aws-cloudfront": "^1.95.2",
+    "@aws-cdk/aws-cloudfront-origins": "^1.95.2",
+    "@aws-cdk/aws-iam": "^1.95.2",
+    "@aws-cdk/aws-lambda": "^1.95.2",
+    "@aws-cdk/aws-lambda-event-sources": "^1.95.2",
+    "@aws-cdk/aws-s3": "^1.95.2",
+    "@aws-cdk/aws-s3-deployment": "^1.95.2",
+    "@aws-cdk/aws-sqs": "^1.95.2",
+    "@aws-cdk/core": "^1.95.2",
     "constructs": "^3.2.27"
   },
-  "bundledDependencies": [],
+  "dependencies": {
+    "execa": "^5.1.1",
+    "fs-extra": "^10.0.0"
+  },
+  "bundledDependencies": [
+    "execa",
+    "fs-extra"
+  ],
   "keywords": [
     "cdk"
   ],
+  "engines": {
+    "node": ">= 12.0.0"
+  },
   "main": "lib/index.js",
   "license": "Apache-2.0",
   "version": "0.0.0",

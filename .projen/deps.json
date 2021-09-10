@@ -6,12 +6,66 @@
       "type": "build"
     },
     {
+      "name": "@aws-cdk/aws-cloudfront-origins",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-cloudfront",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-iam",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-lambda-event-sources",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-lambda",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-s3-deployment",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-s3",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-sqs",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/core",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@sls-next/lambda-at-edge",
+      "version": "latest",
+      "type": "build"
+    },
+    {
+      "name": "@types/fs-extra",
+      "type": "build"
+    },
+    {
       "name": "@types/jest",
       "type": "build"
     },
     {
       "name": "@types/node",
-      "version": "^10.17.0",
+      "version": "^12.0.0",
       "type": "build"
     },
     {
@@ -20,6 +74,15 @@
     },
     {
       "name": "@typescript-eslint/parser",
+      "type": "build"
+    },
+    {
+      "name": "@wheatstalk/lit-snip",
+      "version": "^0.0",
+      "type": "build"
+    },
+    {
+      "name": "aws-cdk",
       "type": "build"
     },
     {
@@ -68,12 +131,21 @@
       "type": "build"
     },
     {
+      "name": "markmac",
+      "version": "^0.1",
+      "type": "build"
+    },
+    {
       "name": "npm-check-updates",
       "version": "^11",
       "type": "build"
     },
     {
       "name": "projen",
+      "type": "build"
+    },
+    {
+      "name": "shx",
       "type": "build"
     },
     {
@@ -86,8 +158,69 @@
       "type": "build"
     },
     {
+      "name": "ts-node",
+      "type": "build"
+    },
+    {
       "name": "typescript",
       "type": "build"
+    },
+    {
+      "name": "yargs",
+      "type": "build"
+    },
+    {
+      "name": "execa",
+      "type": "bundled"
+    },
+    {
+      "name": "fs-extra",
+      "type": "bundled"
+    },
+    {
+      "name": "@aws-cdk/aws-cloudfront-origins",
+      "version": "^1.95.2",
+      "type": "peer"
+    },
+    {
+      "name": "@aws-cdk/aws-cloudfront",
+      "version": "^1.95.2",
+      "type": "peer"
+    },
+    {
+      "name": "@aws-cdk/aws-iam",
+      "version": "^1.95.2",
+      "type": "peer"
+    },
+    {
+      "name": "@aws-cdk/aws-lambda-event-sources",
+      "version": "^1.95.2",
+      "type": "peer"
+    },
+    {
+      "name": "@aws-cdk/aws-lambda",
+      "version": "^1.95.2",
+      "type": "peer"
+    },
+    {
+      "name": "@aws-cdk/aws-s3-deployment",
+      "version": "^1.95.2",
+      "type": "peer"
+    },
+    {
+      "name": "@aws-cdk/aws-s3",
+      "version": "^1.95.2",
+      "type": "peer"
+    },
+    {
+      "name": "@aws-cdk/aws-sqs",
+      "version": "^1.95.2",
+      "type": "peer"
+    },
+    {
+      "name": "@aws-cdk/core",
+      "version": "^1.95.2",
+      "type": "peer"
     },
     {
       "name": "constructs",
