@@ -50,7 +50,7 @@
     "@sls-next/lambda-at-edge": "latest",
     "@types/fs-extra": "^9.0.12",
     "@types/jest": "^27.0.1",
-    "@types/node": "^12.0.0",
+    "@types/node": "^12.13.0",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
     "@wheatstalk/lit-snip": "^0.0",
@@ -100,7 +100,7 @@
     "cdk"
   ],
   "engines": {
-    "node": ">= 12.0.0"
+    "node": ">= 12.13.0"
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
