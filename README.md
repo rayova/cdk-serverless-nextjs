@@ -35,4 +35,4 @@ const dist = new cloudfront.Distribution(scope, 'Distribution', {
 ```
 <!-- </macro> -->
 
-[logo]: images/rayova.png
+[logo]: images/rayova-fintech-corp.png
