@@ -7,9 +7,22 @@ const project = new pj.AwsCdkConstructLibrary({
   defaultReleaseBranch: 'main',
   name: '@rayova/cdk-serverless-nextjs',
   repositoryUrl: 'https://github.com/rayova/cdk-serverless-nextjs.git',
+  description: 'Deploy Serverless Next.js on Lambda @ Edge with the AWS CDK',
+
+  keywords: [
+    'cdk',
+    'next',
+    'lambda',
+    'cloudfront',
+    'serverless',
+    'ssr',
+    'isr',
+    'react',
+  ],
 
   releaseEveryCommit: false,
   releaseToNpm: true,
+  npmAccess: pj.NpmAccess.PUBLIC,
 
   projenUpgradeSecret: 'BOT_GITHUB_TOKEN',
   autoApproveUpgrades: true,
