@@ -2217,7 +2217,7 @@
     path-to-regexp "^6.1.0"
     regex-parser "^2.2.10"
 
-"@sls-next/lambda-at-edge@latest":
+"@sls-next/lambda-at-edge@^3.3.0":
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/@sls-next/lambda-at-edge/-/lambda-at-edge-3.3.0.tgz#5519b9fb0f91a7733c47901a6f8ae120a449baca"
   integrity sha512-yN5MdNVeCWnRfS9a3vzg85Jg18PV5AABXS94d5V4jnV72EBGBOmxM4nOTy0XQpNEVLiaG7A1b7/3aWGiRWZmaQ==

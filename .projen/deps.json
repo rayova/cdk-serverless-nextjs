@@ -51,11 +51,6 @@
       "type": "build"
     },
     {
-      "name": "@sls-next/lambda-at-edge",
-      "version": "latest",
-      "type": "build"
-    },
-    {
       "name": "@types/fs-extra",
       "type": "build"
     },
@@ -164,6 +159,10 @@
     {
       "name": "typescript",
       "type": "build"
+    },
+    {
+      "name": "@sls-next/lambda-at-edge",
+      "type": "bundled"
     },
     {
       "name": "execa",
