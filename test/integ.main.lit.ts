@@ -59,6 +59,10 @@ if (require.main === module) {
   // Copy a page in that has revalidation to test ISR.
   fs.copyFileSync(path.join(__dirname, 'nextjs-test-files', 'time.js'), path.join(nextjsDirectory, 'pages', 'time.js'));
 
+  const apiDir = path.join(nextjsDirectory, 'pages', 'api');
+  fs.mkdirSync(apiDir, { recursive: true });
+  fs.copyFileSync(path.join(__dirname, 'nextjs-test-files', 'api.js'), path.join(apiDir, 'api.js'));
+
   const app = new cdk.App();
   new IntegMainLit(app, {
     nextjsDirectory,

@@ -3,6 +3,7 @@ import * as cloudfront from '@aws-cdk/aws-cloudfront';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as cdk from '@aws-cdk/core';
 import * as fs from 'fs-extra';
+import { ApiLambda } from './api-lambda';
 import { AssetsDeployment } from './assets-deployment';
 import { DefaultLambda } from './default-lambda';
 import { ImageLambda } from './image-lambda';
@@ -34,6 +35,7 @@ export class ServerlessNextjs extends cdk.Construct {
   private readonly bucketAssets: StaticAssets;
   private readonly imageLambda?: ImageLambda;
   private readonly incrementalStaticRegeneration?: IncrementalStaticRegeneration;
+  private readonly apiLambda?: ApiLambda;
 
   constructor(scope: cdk.Construct, id: string, props: ServerlessNextjsProps) {
     super(scope, id);
@@ -76,6 +78,15 @@ export class ServerlessNextjs extends cdk.Construct {
       incrementalStatusGeneration: this.incrementalStaticRegeneration,
       defaultLambdaDir: path.join(this.buildOutputDir, 'default-lambda'),
     });
+
+    const apiLambdaPath = this.getOutputPath('api-lambda');
+
+    if (apiLambdaPath) {
+      this.apiLambda = new ApiLambda(this, 'Api', {
+        bucket: this.bucket,
+        apiLambdaPath,
+      });
+    }
   }
 
   private getOutputPath(outputPath: string) {
@@ -90,6 +101,10 @@ export class ServerlessNextjs extends cdk.Construct {
       additionalBehaviors['_next/image*'] = this.imageLambda.cdnBehaviorOptions;
     }
 
+    if (this.apiLambda) {
+      additionalBehaviors['api/*'] = this.apiLambda.cdnBehaviorOptions;
+    }
+
     additionalBehaviors['_next/*'] = this.bucketAssets.cdnBehaviorOptions;
     additionalBehaviors['static/*'] = this.bucketAssets.cdnBehaviorOptions;
 
@@ -99,3 +114,4 @@ export class ServerlessNextjs extends cdk.Construct {
     };
   }
 }
+
