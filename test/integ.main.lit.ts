@@ -57,7 +57,7 @@ if (require.main === module) {
   // Create a Next.js project from an example.
   const nextjsDirectory = createNextjsExample('blog-starter');
   // Copy a page in that has revalidation to test ISR.
-  fs.copyFileSync(path.join(__dirname, 'pages', 'time.js'), path.join(nextjsDirectory, 'pages', 'time.js'));
+  fs.copyFileSync(path.join(__dirname, 'nextjs-test-files', 'time.js'), path.join(nextjsDirectory, 'pages', 'time.js'));
 
   const app = new cdk.App();
   new IntegMainLit(app, {
