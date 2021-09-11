@@ -1,4 +1,6 @@
-# CDK Serverless Nextjs
+![Rayova A Fintech Corporation][logo]
+
+# CDK Serverless Next.js
 
 A CDK construct to Deploy Serverless Next.js on Lambda @ Edge.
 
@@ -32,3 +34,5 @@ const dist = new cloudfront.Distribution(scope, 'Distribution', {
 });
 ```
 <!-- </macro> -->
+
+[logo]: images/rayova-fintech-corp.png
