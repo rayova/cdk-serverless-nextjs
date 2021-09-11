@@ -14,6 +14,7 @@ export class IntegMainLit extends cdk.Stack {
     super(scope_, 'cdk-serverless-nextjs-integ-main', props);
 
     const scope = this;
+    const pathToYourProjectDirectory = props.nextjsDirectory;
 
     // ::SNIP
     // Create a ServerlessNextjs construct in your stack to get started.
@@ -24,7 +25,7 @@ export class IntegMainLit extends cdk.Stack {
       // building it from your project directory.
       nextjsArtifact: NextjsArtifact.fromBuild({
         // Provide your Next.js project directory.
-        nextjsDirectory: props.nextjsDirectory,
+        nextjsDirectory: pathToYourProjectDirectory,
 
         // Provide the commands you need NextjsArtifact to run to build the
         // `.next` directory.
