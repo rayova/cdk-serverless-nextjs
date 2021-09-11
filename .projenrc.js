@@ -11,16 +11,17 @@ const project = new pj.AwsCdkConstructLibrary({
 
   keywords: [
     'cdk',
-    'next',
     'lambda',
     'cloudfront',
+    'next',
+    'nextjs',
     'serverless',
     'ssr',
     'isr',
     'react',
   ],
 
-  releaseEveryCommit: false,
+  releaseEveryCommit: true,
   releaseToNpm: true,
   npmAccess: pj.NpmAccess.PUBLIC,
 
