@@ -51,10 +51,10 @@ const project = new pj.AwsCdkConstructLibrary({
     'fs-extra',
     'execa',
     'yargs',
+    '@sls-next/lambda-at-edge',
   ],
 
   devDeps: [
-    '@sls-next/lambda-at-edge@latest',
     'aws-cdk',
     '@types/fs-extra',
     'ts-node',
