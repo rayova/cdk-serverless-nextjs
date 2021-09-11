@@ -3,7 +3,13 @@ import * as path from 'path';
 import * as execa from 'execa';
 import * as fs from 'fs-extra';
 import { ASSET_DEPLOYMENT_CONFIGS } from './assets-deployment';
-import { BUILD_SERVERLESS_NEXTJS_SCRIPT } from './constants';
+import {
+  API_LAMBDA_SUBPATH,
+  BUILD_SERVERLESS_NEXTJS_SCRIPT,
+  DEFAULT_LAMBDA_SUBPATH,
+  IMAGE_LAMBDA_SUBPATH,
+  REGENERATION_LAMBDA_SUBPATH,
+} from './constants';
 
 export abstract class NextjsArtifact {
   /** Build a NextjsArtifact from your project directory */
@@ -68,11 +74,12 @@ class EmptyArtifact extends NextjsArtifact {
   _bind(): ServerlessNextjsArtifactConfig {
     const buildOutputDir = fs.mkdtempSync(os.tmpdir());
 
+
     const lambdas = [
-      'api-lambda',
-      'default-lambda',
-      'image-lambda',
-      'regeneration-lambda',
+      API_LAMBDA_SUBPATH,
+      DEFAULT_LAMBDA_SUBPATH,
+      IMAGE_LAMBDA_SUBPATH,
+      REGENERATION_LAMBDA_SUBPATH,
     ];
 
     for (const lambda of lambdas) {
@@ -92,4 +99,3 @@ class EmptyArtifact extends NextjsArtifact {
     };
   }
 }
-

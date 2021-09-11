@@ -3,12 +3,13 @@ import * as path from 'path';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as s3_deployment from '@aws-cdk/aws-s3-deployment';
 import * as cdk from '@aws-cdk/core';
+import { ASSETS_SUBPATH } from './constants';
 
 export interface AssetsDeploymentProps {
   /** Bucket to deploy the assets to */
   readonly bucket: s3.Bucket;
   /** The directory containing the assets */
-  readonly assetsDir: string;
+  readonly buildOutputDir: string;
 }
 
 /** Deploys Next.js assets */
@@ -17,13 +18,18 @@ export class AssetsDeployment extends cdk.Construct {
     super(scope, id);
 
     for (const config of ASSET_DEPLOYMENT_CONFIGS) {
-      const assetPath = path.join(props.assetsDir, config.assetPath);
-      if (!fs.existsSync(assetPath)) continue;
+      const localAssetPath = path.join(
+        props.buildOutputDir,
+        ASSETS_SUBPATH,
+        config.assetPath,
+      );
+
+      if (!fs.existsSync(localAssetPath)) continue;
 
       new s3_deployment.BucketDeployment(this, `Deploy_${config.assetPath}`, {
         destinationBucket: props.bucket,
         destinationKeyPrefix: config.assetPath,
-        sources: [s3_deployment.Source.asset(assetPath)],
+        sources: [s3_deployment.Source.asset(localAssetPath)],
         cacheControl: [config.cacheControl],
         prune: true,
       });
@@ -49,9 +55,24 @@ const CACHE_CONTROL_IMMUTABLE = s3_deployment.CacheControl.fromString(
 );
 
 export const ASSET_DEPLOYMENT_CONFIGS: AssetDeploymentConfig[] = [
-  { assetPath: 'public', cacheControl: CACHE_CONTROL_PUBLIC },
-  { assetPath: 'static', cacheControl: CACHE_CONTROL_PUBLIC },
-  { assetPath: 'static-pages', cacheControl: CACHE_CONTROL_SERVER },
-  { assetPath: '_next/data', cacheControl: CACHE_CONTROL_SERVER },
-  { assetPath: '_next/static', cacheControl: CACHE_CONTROL_IMMUTABLE },
+  {
+    assetPath: 'public',
+    cacheControl: CACHE_CONTROL_PUBLIC,
+  },
+  {
+    assetPath: 'static',
+    cacheControl: CACHE_CONTROL_PUBLIC,
+  },
+  {
+    assetPath: 'static-pages',
+    cacheControl: CACHE_CONTROL_SERVER,
+  },
+  {
+    assetPath: '_next/data',
+    cacheControl: CACHE_CONTROL_SERVER,
+  },
+  {
+    assetPath: '_next/static',
+    cacheControl: CACHE_CONTROL_IMMUTABLE,
+  },
 ];

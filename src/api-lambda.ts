@@ -1,36 +1,41 @@
+import * as path from 'path';
 import * as cloudfront from '@aws-cdk/aws-cloudfront';
 import * as cloudfront_origins from '@aws-cdk/aws-cloudfront-origins';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as cdk from '@aws-cdk/core';
-import { NEXTJS_LAMBDA_RUNTIME } from './constants';
+import { API_LAMBDA_SUBPATH, NEXTJS_LAMBDA_RUNTIME } from './constants';
+import { hasManifest } from './has-manifest';
 import { LambdaAtEdgeRole } from './lambda-at-edge-role';
 
 export interface ApiLambdaProps {
   readonly bucket: s3.IBucket;
-  readonly apiLambdaPath: string;
+  readonly buildOutputDir: string;
 }
 
 export class ApiLambda extends cdk.Construct {
-  private readonly apiLambda: lambda.Function;
-  private readonly cachePolicy: cloudfront.CachePolicy;
-  private readonly origin: cloudfront.IOrigin;
+  private readonly behaviorOptions?: cloudfront.BehaviorOptions;
 
   constructor(scope: cdk.Construct, id: string, props: ApiLambdaProps) {
     super(scope, id);
 
-    this.origin = new cloudfront_origins.S3Origin(props.bucket);
+    const lambdaPath = path.join(props.buildOutputDir, API_LAMBDA_SUBPATH);
 
-    this.apiLambda = new lambda.Function(this, 'Lambda', {
+    // Only create resource if the handler has a manifest.
+    if (!hasManifest(lambdaPath)) return;
+
+    const origin = new cloudfront_origins.S3Origin(props.bucket);
+
+    const apiLambda = new lambda.Function(this, 'Lambda', {
       runtime: NEXTJS_LAMBDA_RUNTIME,
-      code: lambda.Code.fromAsset(props.apiLambdaPath),
+      code: lambda.Code.fromAsset(lambdaPath),
       handler: 'index.handler',
       role: new LambdaAtEdgeRole(this, 'Role'),
       memorySize: 512,
       timeout: cdk.Duration.seconds(30),
     });
 
-    this.cachePolicy = new cloudfront.CachePolicy(this, 'CachePolicy', {
+    const cachePolicy = new cloudfront.CachePolicy(this, 'CachePolicy', {
       queryStringBehavior: cloudfront.CacheQueryStringBehavior.all(),
       headerBehavior: cloudfront.CacheHeaderBehavior.none(),
       defaultTtl: cdk.Duration.seconds(0),
@@ -39,17 +44,15 @@ export class ApiLambda extends cdk.Construct {
       enableAcceptEncodingBrotli: true,
       enableAcceptEncodingGzip: true,
     });
-  }
 
-  get cdnBehaviorOptions(): cloudfront.BehaviorOptions {
-    return {
-      origin: this.origin,
-      cachePolicy: this.cachePolicy,
+    this.behaviorOptions = {
+      origin,
+      cachePolicy,
       edgeLambdas: [
         {
           includeBody: true,
           eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-          functionVersion: this.apiLambda.currentVersion,
+          functionVersion: apiLambda.currentVersion,
         },
       ],
       viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
@@ -58,4 +61,11 @@ export class ApiLambda extends cdk.Construct {
       compress: true,
     };
   }
+
+  addAdditionalBehaviors(additionalBehaviors: Record<string, cloudfront.BehaviorOptions>) {
+    if (this.behaviorOptions) {
+      additionalBehaviors['api/*'] = this.behaviorOptions;
+    }
+  }
 }
+

@@ -1,8 +1,6 @@
-import * as path from 'path';
 import * as cloudfront from '@aws-cdk/aws-cloudfront';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as cdk from '@aws-cdk/core';
-import * as fs from 'fs-extra';
 import { ApiLambda } from './api-lambda';
 import { AssetsDeployment } from './assets-deployment';
 import { DefaultLambda } from './default-lambda';
@@ -33,9 +31,9 @@ export class ServerlessNextjs extends cdk.Construct {
   private readonly bucket: s3.Bucket;
   private readonly defaultLambda: DefaultLambda;
   private readonly bucketAssets: StaticAssets;
-  private readonly imageLambda?: ImageLambda;
+  private readonly imageLambda: ImageLambda;
   private readonly incrementalStaticRegeneration?: IncrementalStaticRegeneration;
-  private readonly apiLambda?: ApiLambda;
+  private readonly apiLambda: ApiLambda;
 
   constructor(scope: cdk.Construct, id: string, props: ServerlessNextjsProps) {
     super(scope, id);
@@ -43,67 +41,45 @@ export class ServerlessNextjs extends cdk.Construct {
     this.buildOutputDir = props.nextjsArtifact._bind().buildOutputDir;
 
     this.bucket = new s3.Bucket(this, 'Bucket');
-
     new AssetsDeployment(this, 'AssetsDeployment', {
       bucket: this.bucket,
-      assetsDir: path.join(this.buildOutputDir, 'assets'),
+      buildOutputDir: this.buildOutputDir,
     });
 
     this.bucketAssets = new StaticAssets(this, 'BucketAssets', {
       originBucket: this.bucket,
     });
 
-    const imageLambdaPath = this.getOutputPath('image-lambda');
-    if (imageLambdaPath) {
-      this.imageLambda = new ImageLambda(this, 'ImageLambda', {
-        originBucket: this.bucket,
-        imageLambdaPath,
-      });
-    }
+    this.imageLambda = new ImageLambda(this, 'ImageLambda', {
+      originBucket: this.bucket,
+      buildOutputDir: this.buildOutputDir,
+    });
 
-    const regenerationLambdaPath = this.getOutputPath('regeneration-lambda');
-    if (regenerationLambdaPath) {
-      this.incrementalStaticRegeneration = new IncrementalStaticRegeneration(
-        this,
-        'IncrementalStaticRegeneration',
-        {
-          originBucket: this.bucket,
-          regenerationLambdaPath,
-        },
-      );
-    }
+    this.incrementalStaticRegeneration = new IncrementalStaticRegeneration(this,
+      'IncrementalStaticRegeneration',
+      {
+        originBucket: this.bucket,
+        buildOutputDir: this.buildOutputDir,
+      },
+    );
 
     this.defaultLambda = new DefaultLambda(this, 'Default', {
       bucket: this.bucket,
-      incrementalStatusGeneration: this.incrementalStaticRegeneration,
-      defaultLambdaDir: path.join(this.buildOutputDir, 'default-lambda'),
+      incrementalStaticRegeneration: this.incrementalStaticRegeneration,
+      buildOutputDir: this.buildOutputDir,
     });
 
-    const apiLambdaPath = this.getOutputPath('api-lambda');
-
-    if (apiLambdaPath) {
-      this.apiLambda = new ApiLambda(this, 'Api', {
-        bucket: this.bucket,
-        apiLambdaPath,
-      });
-    }
-  }
-
-  private getOutputPath(outputPath: string) {
-    const fullOutputPath = path.join(this.buildOutputDir, outputPath);
-    return fs.existsSync(fullOutputPath) ? fullOutputPath : undefined;
+    this.apiLambda = new ApiLambda(this, 'Api', {
+      bucket: this.bucket,
+      buildOutputDir: this.buildOutputDir,
+    });
   }
 
   get cloudFrontConfig(): ServerlessNextjsCloudFrontConfig {
     const additionalBehaviors: Record<string, cloudfront.BehaviorOptions> = {};
 
-    if (this.imageLambda) {
-      additionalBehaviors['_next/image*'] = this.imageLambda.cdnBehaviorOptions;
-    }
-
-    if (this.apiLambda) {
-      additionalBehaviors['api/*'] = this.apiLambda.cdnBehaviorOptions;
-    }
+    this.imageLambda.addAdditionalBehaviors(additionalBehaviors);
+    this.apiLambda.addAdditionalBehaviors(additionalBehaviors);
 
     additionalBehaviors['_next/*'] = this.bucketAssets.cdnBehaviorOptions;
     additionalBehaviors['static/*'] = this.bucketAssets.cdnBehaviorOptions;
@@ -114,4 +90,3 @@ export class ServerlessNextjs extends cdk.Construct {
     };
   }
 }
-
