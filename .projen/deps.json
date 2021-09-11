@@ -166,15 +166,15 @@
       "type": "build"
     },
     {
-      "name": "yargs",
-      "type": "build"
-    },
-    {
       "name": "execa",
       "type": "bundled"
     },
     {
       "name": "fs-extra",
+      "type": "bundled"
+    },
+    {
+      "name": "yargs",
       "type": "bundled"
     },
     {
