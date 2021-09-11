@@ -50,6 +50,7 @@ const project = new pj.AwsCdkConstructLibrary({
   bundledDeps: [
     'fs-extra',
     'execa',
+    'yargs',
   ],
 
   devDeps: [
@@ -57,7 +58,6 @@ const project = new pj.AwsCdkConstructLibrary({
     'aws-cdk',
     '@types/fs-extra',
     'ts-node',
-    'yargs',
     'markmac@^0.1',
     'shx',
     '@wheatstalk/lit-snip@^0.0',
