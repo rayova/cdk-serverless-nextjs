@@ -2,9 +2,30 @@
 
 # CDK Serverless Next.js
 
-A CDK construct to Deploy Serverless Next.js on Lambda @ Edge.
+This project provides an AWS CDK construct to Deploy Serverless Next.js to
+Lambda@Edge. We designed the construct following these principles:
 
-# Example Usage
+* Sensible defaults
+* Feature parity with Next.js
+* Fast deployments
+* Build the AWS Lambda deployment package for you
+* Provide `BehaviorOptions` for you to add to your CloudFront Distribution
+
+## Supported Next.js features
+
+This construct library aims for feature parity with Next.js. Through
+[@sls-next/lambda-at-edge][@sls-next/lambda-at-edge], this CDK construct
+supports:
+
+* Next.js 10/11
+* Static pages
+* Server-side props
+* Static props and static prop fallback
+* Incremental static regeneration
+* Image optimization
+* API routes
+
+## Example Usage
 
 <!-- <macro exec="lit-snip ./test/integ.main.lit.ts"> -->
 ```ts
@@ -36,3 +57,4 @@ const dist = new cloudfront.Distribution(scope, 'Distribution', {
 <!-- </macro> -->
 
 [logo]: images/rayova-fintech-corp.png
+[@sls-next/lambda-at-edge]: https://www.npmjs.com/package/@sls-next/lambda-at-edge
