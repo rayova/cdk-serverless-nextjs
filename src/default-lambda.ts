@@ -1,16 +1,17 @@
+import * as path from 'path';
 import * as cloudfront from '@aws-cdk/aws-cloudfront';
 import * as cloudfront_origins from '@aws-cdk/aws-cloudfront-origins';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as cdk from '@aws-cdk/core';
-import { NEXTJS_LAMBDA_RUNTIME } from './constants';
+import { DEFAULT_LAMBDA_SUBPATH, NEXTJS_LAMBDA_RUNTIME } from './constants';
 import { IncrementalStaticRegeneration } from './incremental-static-regeneration';
 import { LambdaAtEdgeRole } from './lambda-at-edge-role';
 
 export interface DefaultLambdaProps {
   readonly bucket: s3.IBucket;
-  readonly incrementalStatusGeneration?: IncrementalStaticRegeneration;
-  readonly defaultLambdaDir: string;
+  readonly incrementalStaticRegeneration: IncrementalStaticRegeneration;
+  readonly buildOutputDir: string;
 }
 
 export class DefaultLambda extends cdk.Construct {
@@ -24,9 +25,11 @@ export class DefaultLambda extends cdk.Construct {
     this.origin = new cloudfront_origins.S3Origin(props.bucket);
     this.cachePolicy = cloudfront.CachePolicy.CACHING_DISABLED;
 
+    const lambdaDir = path.join(props.buildOutputDir, DEFAULT_LAMBDA_SUBPATH);
+
     this.defaultLambda = new lambda.Function(this, 'Lambda', {
       runtime: NEXTJS_LAMBDA_RUNTIME,
-      code: lambda.Code.fromAsset(props.defaultLambdaDir),
+      code: lambda.Code.fromAsset(lambdaDir),
       handler: 'index.handler',
       role: new LambdaAtEdgeRole(this, 'Role'),
       memorySize: 512,
@@ -34,13 +37,13 @@ export class DefaultLambda extends cdk.Construct {
     });
     props.bucket.grantReadWrite(this.defaultLambda);
 
-    const regenerationLambda = props.incrementalStatusGeneration;
-    if (regenerationLambda) {
-      regenerationLambda.regenerationQueue.grantSendMessages(
-        this.defaultLambda,
-      );
-      regenerationLambda.regenerationFunction.grantInvoke(this.defaultLambda);
-    }
+    const incrementalStaticRegeneration = props.incrementalStaticRegeneration;
+    incrementalStaticRegeneration.regenerationQueue?.grantSendMessages(
+      this.defaultLambda,
+    );
+    incrementalStaticRegeneration.regenerationFunction?.grantInvoke(
+      this.defaultLambda,
+    );
   }
 
   get cdnBehaviorOptions(): cloudfront.BehaviorOptions {
