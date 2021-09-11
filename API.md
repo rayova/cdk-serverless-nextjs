@@ -2,6 +2,45 @@
 
 ## Constructs <a name="Constructs"></a>
 
+### ApiLambda <a name="@rayova/cdk-serverless-nextjs.ApiLambda"></a>
+
+#### Initializers <a name="@rayova/cdk-serverless-nextjs.ApiLambda.Initializer"></a>
+
+```typescript
+import { ApiLambda } from '@rayova/cdk-serverless-nextjs'
+
+new ApiLambda(scope: Construct, id: string, props: ApiLambdaProps)
+```
+
+##### `scope`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.ApiLambda.parameter.scope"></a>
+
+- *Type:* [`@aws-cdk/core.Construct`](#@aws-cdk/core.Construct)
+
+---
+
+##### `id`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.ApiLambda.parameter.id"></a>
+
+- *Type:* `string`
+
+---
+
+##### `props`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.ApiLambda.parameter.props"></a>
+
+- *Type:* [`@rayova/cdk-serverless-nextjs.ApiLambdaProps`](#@rayova/cdk-serverless-nextjs.ApiLambdaProps)
+
+---
+
+
+
+#### Properties <a name="Properties"></a>
+
+##### `cdnBehaviorOptions`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.ApiLambda.property.cdnBehaviorOptions"></a>
+
+- *Type:* [`@aws-cdk/aws-cloudfront.BehaviorOptions`](#@aws-cdk/aws-cloudfront.BehaviorOptions)
+
+---
+
+
 ### ServerlessNextjs <a name="@rayova/cdk-serverless-nextjs.ServerlessNextjs"></a>
 
 Deploy Next.js as Lambda@Edge.
@@ -46,6 +85,28 @@ new ServerlessNextjs(scope: Construct, id: string, props: ServerlessNextjsProps)
 
 
 ## Structs <a name="Structs"></a>
+
+### ApiLambdaProps <a name="@rayova/cdk-serverless-nextjs.ApiLambdaProps"></a>
+
+#### Initializer <a name="[object Object].Initializer"></a>
+
+```typescript
+import { ApiLambdaProps } from '@rayova/cdk-serverless-nextjs'
+
+const apiLambdaProps: ApiLambdaProps = { ... }
+```
+
+##### `apiLambdaPath`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.ApiLambdaProps.property.apiLambdaPath"></a>
+
+- *Type:* `string`
+
+---
+
+##### `bucket`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.ApiLambdaProps.property.bucket"></a>
+
+- *Type:* [`@aws-cdk/aws-s3.IBucket`](#@aws-cdk/aws-s3.IBucket)
+
+---
 
 ### NextjsArtifactFromBuildOptions <a name="@rayova/cdk-serverless-nextjs.NextjsArtifactFromBuildOptions"></a>
 

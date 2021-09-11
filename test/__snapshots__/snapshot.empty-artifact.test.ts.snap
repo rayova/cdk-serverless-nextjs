@@ -274,9 +274,13 @@ Object {
                 "GET",
                 "HEAD",
                 "OPTIONS",
+                "PUT",
+                "PATCH",
+                "POST",
+                "DELETE",
               ],
               "CachePolicyId": Object {
-                "Ref": "ServerlessNextJsBucketAssetsCachePolicyE658DAF4",
+                "Ref": "ServerlessNextJsApiCachePolicy56A048D1",
               },
               "CachedMethods": Array [
                 "GET",
@@ -284,7 +288,16 @@ Object {
                 "OPTIONS",
               ],
               "Compress": true,
-              "PathPattern": "_next/*",
+              "LambdaFunctionAssociations": Array [
+                Object {
+                  "EventType": "origin-request",
+                  "IncludeBody": true,
+                  "LambdaFunctionARN": Object {
+                    "Ref": "ServerlessNextJsApiLambdaCurrentVersion9D9C4C62be41d8e79cc0e4dc35c472f8d5d03b9f",
+                  },
+                },
+              ],
+              "PathPattern": "api/*",
               "TargetOriginId": "SnapshotDistributionOrigin353AC2C7D",
               "ViewerProtocolPolicy": "redirect-to-https",
             },
@@ -303,8 +316,27 @@ Object {
                 "OPTIONS",
               ],
               "Compress": true,
+              "PathPattern": "_next/*",
+              "TargetOriginId": "SnapshotDistributionOrigin46C577666",
+              "ViewerProtocolPolicy": "redirect-to-https",
+            },
+            Object {
+              "AllowedMethods": Array [
+                "GET",
+                "HEAD",
+                "OPTIONS",
+              ],
+              "CachePolicyId": Object {
+                "Ref": "ServerlessNextJsBucketAssetsCachePolicyE658DAF4",
+              },
+              "CachedMethods": Array [
+                "GET",
+                "HEAD",
+                "OPTIONS",
+              ],
+              "Compress": true,
               "PathPattern": "static/*",
-              "TargetOriginId": "SnapshotDistributionOrigin353AC2C7D",
+              "TargetOriginId": "SnapshotDistributionOrigin46C577666",
               "ViewerProtocolPolicy": "redirect-to-https",
             },
           ],
@@ -409,6 +441,28 @@ Object {
                 },
               },
             },
+            Object {
+              "DomainName": Object {
+                "Fn::GetAtt": Array [
+                  "ServerlessNextJsBucket352C45DE",
+                  "RegionalDomainName",
+                ],
+              },
+              "Id": "SnapshotDistributionOrigin46C577666",
+              "S3OriginConfig": Object {
+                "OriginAccessIdentity": Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      "origin-access-identity/cloudfront/",
+                      Object {
+                        "Ref": "DistributionOrigin4S3Origin47CC975E",
+                      },
+                    ],
+                  ],
+                },
+              },
+            },
           ],
         },
       },
@@ -437,6 +491,153 @@ Object {
         },
       },
       "Type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+    },
+    "DistributionOrigin4S3Origin47CC975E": Object {
+      "Properties": Object {
+        "CloudFrontOriginAccessIdentityConfig": Object {
+          "Comment": "Identity for SnapshotDistributionOrigin46C577666",
+        },
+      },
+      "Type": "AWS::CloudFront::CloudFrontOriginAccessIdentity",
+    },
+    "ServerlessNextJsApiCachePolicy56A048D1": Object {
+      "Properties": Object {
+        "CachePolicyConfig": Object {
+          "DefaultTTL": 0,
+          "MaxTTL": 31536000,
+          "MinTTL": 0,
+          "Name": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "SnapshotServerlessNextJsApiCachePolicy65ADF751-",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+              ],
+            ],
+          },
+          "ParametersInCacheKeyAndForwardedToOrigin": Object {
+            "CookiesConfig": Object {
+              "CookieBehavior": "none",
+            },
+            "EnableAcceptEncodingBrotli": true,
+            "EnableAcceptEncodingGzip": true,
+            "HeadersConfig": Object {
+              "HeaderBehavior": "none",
+            },
+            "QueryStringsConfig": Object {
+              "QueryStringBehavior": "all",
+            },
+          },
+        },
+      },
+      "Type": "AWS::CloudFront::CachePolicy",
+    },
+    "ServerlessNextJsApiLambdaCurrentVersion9D9C4C62be41d8e79cc0e4dc35c472f8d5d03b9f": Object {
+      "Properties": Object {
+        "FunctionName": Object {
+          "Ref": "ServerlessNextJsApiLambdaE217BAB3",
+        },
+      },
+      "Type": "AWS::Lambda::Version",
+    },
+    "ServerlessNextJsApiLambdaE217BAB3": Object {
+      "DependsOn": Array [
+        "ServerlessNextJsApiRole070C2B4C",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParametersb5f1f675ebad4ecbdec1554c42c5308a68f628f979a81f7b12665f2445df3ee7S3BucketCAE62FC7",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParametersb5f1f675ebad4ecbdec1554c42c5308a68f628f979a81f7b12665f2445df3ee7S3VersionKeyEECC8B58",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParametersb5f1f675ebad4ecbdec1554c42c5308a68f628f979a81f7b12665f2445df3ee7S3VersionKeyEECC8B58",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Handler": "index.handler",
+        "MemorySize": 512,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ServerlessNextJsApiRole070C2B4C",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 30,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ServerlessNextJsApiRole070C2B4C": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": Array [
+                  "lambda.amazonaws.com",
+                  "edgelambda.amazonaws.com",
+                ],
+              },
+            },
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "edgelambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
     },
     "ServerlessNextJsAssetsDeploymentDeploynextdataAwsCliLayer3A9A023C": Object {
       "Properties": Object {
@@ -1068,6 +1269,32 @@ Object {
                 "CanonicalUser": Object {
                   "Fn::GetAtt": Array [
                     "DistributionOrigin3S3Origin24527178",
+                    "S3CanonicalUserId",
+                  ],
+                },
+              },
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    Object {
+                      "Fn::GetAtt": Array [
+                        "ServerlessNextJsBucket352C45DE",
+                        "Arn",
+                      ],
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": "s3:GetObject",
+              "Effect": "Allow",
+              "Principal": Object {
+                "CanonicalUser": Object {
+                  "Fn::GetAtt": Array [
+                    "DistributionOrigin4S3Origin47CC975E",
                     "S3CanonicalUserId",
                   ],
                 },
