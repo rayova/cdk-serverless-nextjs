@@ -31,7 +31,6 @@ export class AssetsDeployment extends cdk.Construct {
         destinationKeyPrefix: config.assetPath,
         sources: [s3_deployment.Source.asset(localAssetPath)],
         cacheControl: [config.cacheControl],
-        prune: true,
       });
     }
   }
