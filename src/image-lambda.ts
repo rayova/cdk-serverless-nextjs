@@ -29,7 +29,7 @@ export class ImageLambda extends cdk.Construct {
 
     const imageLambda = new lambda.Function(this, 'Lambda', {
       runtime: NEXTJS_LAMBDA_RUNTIME,
-      code: lambda.Code.fromAsset(props.buildOutputDir),
+      code: lambda.Code.fromAsset(lambdaPath),
       handler: 'index.handler',
       role: new LambdaAtEdgeRole(this, 'Role'),
       timeout: cdk.Duration.seconds(30),
