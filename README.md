@@ -16,7 +16,7 @@ const serverlessNextjs = new ServerlessNextjs(scope, 'NextJs', {
   // building it from your project directory.
   nextjsArtifact: NextjsArtifact.fromBuild({
     // Provide your Next.js project directory.
-    nextjsDirectory: props.nextjsDirectory,
+    nextjsDirectory: pathToYourProjectDirectory,
 
     // Provide the commands you need NextjsArtifact to run to build the
     // `.next` directory.
