@@ -8,7 +8,7 @@ import { NEXTJS_LAMBDA_RUNTIME, REGENERATION_LAMBDA_SUBPATH } from './constants'
 import { hasManifest } from './has-manifest';
 import { LambdaAtEdgeRole } from './lambda-at-edge-role';
 
-export interface ISRRegenerationProps {
+export interface IncrementalStaticRegenerationProps {
   /** Origin bucket */
   readonly originBucket: s3.IBucket;
   /** Path to the regeneration lambda bundle */
@@ -22,7 +22,7 @@ export class IncrementalStaticRegeneration extends cdk.Construct {
   /** The regeneration function */
   public readonly regenerationFunction?: lambda.Function;
 
-  constructor(scope: cdk.Construct, id: string, props: ISRRegenerationProps) {
+  constructor(scope: cdk.Construct, id: string, props: IncrementalStaticRegenerationProps) {
     super(scope, id);
 
     const lambdaPath = path.join(props.buildOutputDir, REGENERATION_LAMBDA_SUBPATH);
