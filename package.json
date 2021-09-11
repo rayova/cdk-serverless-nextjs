@@ -5,9 +5,6 @@
     "type": "git",
     "url": "https://github.com/rayova/cdk-serverless-nextjs.git"
   },
-  "bin": {
-    "build-serverless-nextjs.js": "bin/build-serverless-nextjs.js"
-  },
   "scripts": {
     "clobber": "npx projen clobber",
     "compile": "npx projen compile",
