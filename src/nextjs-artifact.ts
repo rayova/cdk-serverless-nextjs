@@ -65,8 +65,9 @@ class FromBuild extends NextjsArtifact {
 
     // Insert a custom handler that provides extra context for the Next.js app.
     const indirectHandler = 'index-indirect.js';
-    fs.copyFileSync(path.join(__dirname, indirectHandler), path.join(outputDir, DEFAULT_LAMBDA_SUBPATH, indirectHandler));
-    fs.copyFileSync(path.join(__dirname, indirectHandler), path.join(outputDir, API_LAMBDA_SUBPATH, indirectHandler));
+    const indirectHandlerSrc = path.join(__dirname, '..', 'functions', indirectHandler);
+    fs.copyFileSync(indirectHandlerSrc, path.join(outputDir, DEFAULT_LAMBDA_SUBPATH, indirectHandler));
+    fs.copyFileSync(indirectHandlerSrc, path.join(outputDir, API_LAMBDA_SUBPATH, indirectHandler));
 
     return {
       buildOutputDir: outputDir,
