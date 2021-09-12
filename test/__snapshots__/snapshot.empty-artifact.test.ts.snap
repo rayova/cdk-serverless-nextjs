@@ -296,13 +296,13 @@ Object {
                 "EventType": "origin-request",
                 "IncludeBody": true,
                 "LambdaFunctionARN": Object {
-                  "Ref": "ServerlessNextJsLambdaCurrentVersionA807374Ac041d39955ed8760e7a47b1e4fe9338e",
+                  "Ref": "ServerlessNextJsLambdaCurrentVersionA807374A6a241a3b7fa669519ea192b74d66de21",
                 },
               },
               Object {
                 "EventType": "origin-response",
                 "LambdaFunctionARN": Object {
-                  "Ref": "ServerlessNextJsLambdaCurrentVersionA807374Ac041d39955ed8760e7a47b1e4fe9338e",
+                  "Ref": "ServerlessNextJsLambdaCurrentVersionA807374A6a241a3b7fa669519ea192b74d66de21",
                 },
               },
             ],
@@ -1051,7 +1051,7 @@ Object {
             ],
           },
         },
-        "Handler": "index.handler",
+        "Handler": "index-indirect.handler",
         "MemorySize": 512,
         "Role": Object {
           "Fn::GetAtt": Array [
@@ -1064,7 +1064,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "ServerlessNextJsLambdaCurrentVersionA807374Ac041d39955ed8760e7a47b1e4fe9338e": Object {
+    "ServerlessNextJsLambdaCurrentVersionA807374A6a241a3b7fa669519ea192b74d66de21": Object {
       "Properties": Object {
         "FunctionName": Object {
           "Ref": "ServerlessNextJsLambdaCF85BA9F",

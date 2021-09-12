@@ -30,7 +30,7 @@ export class DefaultLambda extends cdk.Construct {
     this.defaultLambda = new lambda.Function(this, 'Lambda', {
       runtime: NEXTJS_LAMBDA_RUNTIME,
       code: lambda.Code.fromAsset(lambdaDir),
-      handler: 'index.handler',
+      handler: 'index-indirect.handler',
       role: new LambdaAtEdgeRole(this, 'Role'),
       memorySize: 512,
       timeout: cdk.Duration.seconds(30),
