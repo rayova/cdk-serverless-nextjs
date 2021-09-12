@@ -10,15 +10,14 @@ export interface StaticAssetsProps {
 
 /** Creates CDN Behavior Options for static assets */
 export class StaticAssets extends cdk.Construct {
-  private readonly origin: cloudfront_origins.S3Origin;
-  private readonly cachePolicy: cloudfront.CachePolicy;
+  public readonly cdnBehaviorOptions: cloudfront.BehaviorOptions;
 
   constructor(scope: cdk.Construct, id: string, props: StaticAssetsProps) {
     super(scope, id);
 
-    this.origin = new cloudfront_origins.S3Origin(props.originBucket);
+    const origin = new cloudfront_origins.S3Origin(props.originBucket);
 
-    this.cachePolicy = new cloudfront.CachePolicy(this, 'CachePolicy', {
+    const cachePolicy = new cloudfront.CachePolicy(this, 'CachePolicy', {
       queryStringBehavior: cloudfront.CacheQueryStringBehavior.none(),
       headerBehavior: cloudfront.CacheHeaderBehavior.none(),
       cookieBehavior: cloudfront.CacheCookieBehavior.none(),
@@ -28,12 +27,10 @@ export class StaticAssets extends cdk.Construct {
       enableAcceptEncodingBrotli: true,
       enableAcceptEncodingGzip: true,
     });
-  }
 
-  get cdnBehaviorOptions(): cloudfront.BehaviorOptions {
-    return {
-      origin: this.origin,
-      cachePolicy: this.cachePolicy,
+    this.cdnBehaviorOptions = {
+      origin,
+      cachePolicy,
       viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
       cachedMethods: cloudfront.CachedMethods.CACHE_GET_HEAD_OPTIONS,
