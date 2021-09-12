@@ -29,7 +29,7 @@ export class ApiLambda extends cdk.Construct {
     const apiLambda = new lambda.Function(this, 'Lambda', {
       runtime: NEXTJS_LAMBDA_RUNTIME,
       code: lambda.Code.fromAsset(lambdaPath),
-      handler: 'index.handler',
+      handler: 'index-indirect.handler',
       role: new LambdaAtEdgeRole(this, 'Role'),
       memorySize: 512,
       timeout: cdk.Duration.seconds(30),

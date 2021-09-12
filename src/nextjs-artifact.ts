@@ -63,6 +63,11 @@ class FromBuild extends NextjsArtifact {
 
     const outputDir = path.normalize(path.join(this.nextjsDirectory, '.serverless_nextjs'));
 
+    // Insert a custom handler that provides extra context for the Next.js app.
+    const indirectHandler = 'index-indirect.js';
+    fs.copyFileSync(path.join(__dirname, indirectHandler), path.join(outputDir, DEFAULT_LAMBDA_SUBPATH, indirectHandler));
+    fs.copyFileSync(path.join(__dirname, indirectHandler), path.join(outputDir, API_LAMBDA_SUBPATH, indirectHandler));
+
     return {
       buildOutputDir: outputDir,
     };
@@ -73,7 +78,6 @@ class FromBuild extends NextjsArtifact {
 class EmptyArtifact extends NextjsArtifact {
   _bind(): ServerlessNextjsArtifactConfig {
     const buildOutputDir = fs.mkdtempSync(os.tmpdir());
-
 
     const lambdas = [
       API_LAMBDA_SUBPATH,
