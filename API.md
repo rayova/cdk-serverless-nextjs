@@ -40,6 +40,10 @@ new ServerlessNextjs(scope: Construct, id: string, props: ServerlessNextjsProps)
 
 ##### `cloudFrontConfig`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.ServerlessNextjs.property.cloudFrontConfig"></a>
 
+```typescript
+public readonly cloudFrontConfig: ServerlessNextjsCloudFrontConfig;
+```
+
 - *Type:* [`@rayova/cdk-serverless-nextjs.ServerlessNextjsCloudFrontConfig`](#@rayova/cdk-serverless-nextjs.ServerlessNextjsCloudFrontConfig)
 
 ---
@@ -59,6 +63,10 @@ const nextjsArtifactFromBuildOptions: NextjsArtifactFromBuildOptions = { ... }
 
 ##### `buildCommand`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.NextjsArtifactFromBuildOptions.property.buildCommand"></a>
 
+```typescript
+public readonly buildCommand: string[];
+```
+
 - *Type:* `string`[]
 
 The command to build nextjs's .next directory.
@@ -68,6 +76,10 @@ i.e., ['yarn', 'build'] or ['yarn', 'next', 'build']
 ---
 
 ##### `nextjsDirectory`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.NextjsArtifactFromBuildOptions.property.nextjsDirectory"></a>
+
+```typescript
+public readonly nextjsDirectory: string;
+```
 
 - *Type:* `string`
 
@@ -89,6 +101,10 @@ const serverlessNextjsCloudFrontConfig: ServerlessNextjsCloudFrontConfig = { ...
 
 ##### `additionalBehaviors`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.ServerlessNextjsCloudFrontConfig.property.additionalBehaviors"></a>
 
+```typescript
+public readonly additionalBehaviors: {[ key: string ]: BehaviorOptions};
+```
+
 - *Type:* {[ key: string ]: [`@aws-cdk/aws-cloudfront.BehaviorOptions`](#@aws-cdk/aws-cloudfront.BehaviorOptions)}
 
 Additional behaviors.
@@ -96,6 +112,10 @@ Additional behaviors.
 ---
 
 ##### `defaultBehavior`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.ServerlessNextjsCloudFrontConfig.property.defaultBehavior"></a>
+
+```typescript
+public readonly defaultBehavior: BehaviorOptions;
+```
 
 - *Type:* [`@aws-cdk/aws-cloudfront.BehaviorOptions`](#@aws-cdk/aws-cloudfront.BehaviorOptions)
 
@@ -114,6 +134,10 @@ const serverlessNextjsProps: ServerlessNextjsProps = { ... }
 ```
 
 ##### `nextjsArtifact`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.ServerlessNextjsProps.property.nextjsArtifact"></a>
+
+```typescript
+public readonly nextjsArtifact: NextjsArtifact;
+```
 
 - *Type:* [`@rayova/cdk-serverless-nextjs.NextjsArtifact`](#@rayova/cdk-serverless-nextjs.NextjsArtifact)
 
