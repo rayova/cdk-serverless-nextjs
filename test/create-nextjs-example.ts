@@ -13,5 +13,19 @@ export function createNextjsExample(example: string) {
     });
   }
 
+  execa.sync('yarn', ['install'], {
+    cwd: buildDir,
+  });
+
+  const nextBuildDir = path.join(buildDir, '.next');
+  if (fs.existsSync(nextBuildDir)) {
+    fs.rmdirSync(nextBuildDir, { recursive: true });
+  }
+
+  const slsNextBuildDir = path.join(buildDir, '.serverless_nextjs');
+  if (fs.existsSync(slsNextBuildDir)) {
+    fs.rmdirSync(slsNextBuildDir, { recursive: true });
+  }
+
   return buildDir;
 }

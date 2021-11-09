@@ -32,8 +32,6 @@ const project = new pj.AwsCdkConstructLibrary({
     allowedUsernames: ['github-actions', 'github-actions[bot]', 'rayova-bot'],
   },
 
-  minNodeVersion: '12.13.0',
-
   cdkDependenciesAsDeps: false,
   cdkDependencies: [
     '@aws-cdk/aws-s3',
@@ -98,6 +96,6 @@ const macros = project.addTask('readme-macros');
 macros.exec('shx mv README.md README.md.bak');
 macros.exec('shx cat README.md.bak | markmac > README.md');
 macros.exec('shx rm README.md.bak');
-project.buildTask.spawn(macros);
+project.postCompileTask.spawn(macros);
 
 project.synth();

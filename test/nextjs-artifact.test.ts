@@ -6,8 +6,6 @@ import { createNextjsExample } from './create-nextjs-example';
 it('generates the lambda bundle', () => {
   // Create a Next.js project from an example.
   const nextjsDirectory = createNextjsExample('blog-starter');
-  fs.rmdirSync(path.join(nextjsDirectory, '.next'), { recursive: true });
-  fs.rmdirSync(path.join(nextjsDirectory, '.serverless_nextjs'), { recursive: true });
 
   const artifact = NextjsArtifact.fromBuild({
     nextjsDirectory,
