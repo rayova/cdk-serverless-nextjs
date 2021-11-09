@@ -13,6 +13,9 @@ export function createNextjsExample(example: string) {
     });
   }
 
+  execa.sync('yarn', ['install'], {
+    cwd: buildDir,
+  });
 
   const nextBuildDir = path.join(buildDir, '.next');
   if (fs.existsSync(nextBuildDir)) {
