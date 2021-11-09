@@ -98,6 +98,6 @@ const macros = project.addTask('readme-macros');
 macros.exec('shx mv README.md README.md.bak');
 macros.exec('shx cat README.md.bak | markmac > README.md');
 macros.exec('shx rm README.md.bak');
-project.buildTask.spawn(macros);
+project.postCompileTask.spawn(macros);
 
 project.synth();
