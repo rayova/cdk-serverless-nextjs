@@ -78,7 +78,7 @@ class FromBuild extends NextjsArtifact {
 /** Create a stable NextjsArtifact suitable for snapshot tests */
 class EmptyArtifact extends NextjsArtifact {
   _bind(): ServerlessNextjsArtifactConfig {
-    const buildOutputDir = fs.mkdtempSync(os.tmpdir());
+    const buildOutputDir = fs.mkdtempSync(path.join(os.tmpdir(), 'nextjsartifact'));
 
     const lambdas = [
       API_LAMBDA_SUBPATH,
