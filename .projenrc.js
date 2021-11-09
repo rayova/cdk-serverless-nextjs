@@ -32,8 +32,6 @@ const project = new pj.AwsCdkConstructLibrary({
     allowedUsernames: ['github-actions', 'github-actions[bot]', 'rayova-bot'],
   },
 
-  minNodeVersion: '12.13.0',
-
   cdkDependenciesAsDeps: false,
   cdkDependencies: [
     '@aws-cdk/aws-s3',
