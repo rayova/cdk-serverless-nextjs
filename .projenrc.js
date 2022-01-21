@@ -1,6 +1,17 @@
-const pj = require('projen');
+const { awscdk } = require('projen');
 
-const project = new pj.AwsCdkConstructLibrary({
+const cdkDependencies = [
+  '@aws-cdk/aws-s3',
+  '@aws-cdk/aws-s3-deployment',
+  '@aws-cdk/aws-cloudfront',
+  '@aws-cdk/aws-cloudfront-origins',
+  '@aws-cdk/aws-iam',
+  '@aws-cdk/aws-lambda',
+  '@aws-cdk/aws-lambda-event-sources',
+  '@aws-cdk/aws-sqs',
+  '@aws-cdk/core',
+];
+const project = new awscdk.AwsCdkConstructLibrary({
   author: 'Josh Kellendonk',
   authorAddress: 'josh@rayova.com',
   cdkVersion: '1.95.2',
@@ -23,27 +34,21 @@ const project = new pj.AwsCdkConstructLibrary({
 
   releaseEveryCommit: true,
   releaseToNpm: true,
-  npmAccess: pj.NpmAccess.PUBLIC,
 
-  projenUpgradeSecret: 'BOT_GITHUB_TOKEN',
-  autoApproveUpgrades: true,
-  autoApproveOptions: {
-    secret: 'GITHUB_TOKEN',
-    allowedUsernames: ['github-actions', 'github-actions[bot]', 'rayova-bot'],
+  depsUpgradeOptions: {
+    ignoreProjen: false,
   },
 
+  autoApproveUpgrades: true,
+  autoApproveOptions: {
+    allowedUsernames: ['rayova-bot'],
+  },
+
+  workflowNodeVersion: '14',
+
   cdkDependenciesAsDeps: false,
-  cdkDependencies: [
-    '@aws-cdk/aws-s3',
-    '@aws-cdk/aws-s3-deployment',
-    '@aws-cdk/aws-cloudfront',
-    '@aws-cdk/aws-cloudfront-origins',
-    '@aws-cdk/aws-iam',
-    '@aws-cdk/aws-lambda',
-    '@aws-cdk/aws-lambda-event-sources',
-    '@aws-cdk/aws-sqs',
-    '@aws-cdk/core',
-  ],
+  cdkDependencies: cdkDependencies, // Created as peer deps
+  cdkTestDependencies: cdkDependencies, // Duplicate into dev deps
 
   bundledDeps: [
     'fs-extra',
@@ -79,7 +84,7 @@ const project = new pj.AwsCdkConstructLibrary({
   // release: undefined,                /* Add release management to this project. */
 });
 
-project.package.setScript('integ:main', 'cdk --app "ts-node -P tsconfig.jest.json test/integ.main.lit.ts"');
+project.package.setScript('integ:main', 'cdk --app "ts-node -P tsconfig.dev.json test/integ.main.lit.ts"');
 
 const ignores = [
   '/.idea',
