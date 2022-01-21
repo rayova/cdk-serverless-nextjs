@@ -1,6 +1,6 @@
-const pj = require('projen');
+const { awscdk } = require('projen');
 
-const project = new pj.AwsCdkConstructLibrary({
+const project = new awscdk.AwsCdkConstructLibrary({
   author: 'Josh Kellendonk',
   authorAddress: 'josh@rayova.com',
   cdkVersion: '1.95.2',
@@ -23,14 +23,17 @@ const project = new pj.AwsCdkConstructLibrary({
 
   releaseEveryCommit: true,
   releaseToNpm: true,
-  npmAccess: pj.NpmAccess.PUBLIC,
 
-  projenUpgradeSecret: 'BOT_GITHUB_TOKEN',
+  depsUpgradeOptions: {
+    ignoreProjen: false,
+  },
+
   autoApproveUpgrades: true,
   autoApproveOptions: {
-    secret: 'GITHUB_TOKEN',
-    allowedUsernames: ['github-actions', 'github-actions[bot]', 'rayova-bot'],
+    allowedUsernames: ['rayova-bot'],
   },
+
+  workflowNodeVersion: '14',
 
   cdkDependenciesAsDeps: false,
   cdkDependencies: [
