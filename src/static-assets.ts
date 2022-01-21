@@ -1,7 +1,8 @@
-import * as cloudfront from '@aws-cdk/aws-cloudfront';
-import * as cloudfront_origins from '@aws-cdk/aws-cloudfront-origins';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as cdk from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import * as cloudfront_origins from 'aws-cdk-lib/aws-cloudfront-origins';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import { Construct } from 'constructs';
 
 export interface StaticAssetsProps {
   /** The bucket to create as an origin containing the assets */
@@ -9,10 +10,10 @@ export interface StaticAssetsProps {
 }
 
 /** Creates CDN Behavior Options for static assets */
-export class StaticAssets extends cdk.Construct {
+export class StaticAssets extends Construct {
   public readonly cdnBehaviorOptions: cloudfront.BehaviorOptions;
 
-  constructor(scope: cdk.Construct, id: string, props: StaticAssetsProps) {
+  constructor(scope: Construct, id: string, props: StaticAssetsProps) {
     super(scope, id);
 
     const origin = new cloudfront_origins.S3Origin(props.originBucket);

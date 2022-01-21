@@ -1,9 +1,10 @@
 import * as path from 'path';
-import * as cloudfront from '@aws-cdk/aws-cloudfront';
-import * as cloudfront_origins from '@aws-cdk/aws-cloudfront-origins';
-import * as lambda from '@aws-cdk/aws-lambda';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as cdk from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import * as cloudfront_origins from 'aws-cdk-lib/aws-cloudfront-origins';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import { Construct } from 'constructs';
 import { API_LAMBDA_SUBPATH, NEXTJS_LAMBDA_RUNTIME } from './constants';
 import { hasManifest } from './has-manifest';
 import { LambdaAtEdgeRole } from './lambda-at-edge-role';
@@ -13,10 +14,10 @@ export interface ApiLambdaProps {
   readonly buildOutputDir: string;
 }
 
-export class ApiLambda extends cdk.Construct {
+export class ApiLambda extends Construct {
   private readonly behaviorOptions?: cloudfront.BehaviorOptions;
 
-  constructor(scope: cdk.Construct, id: string, props: ApiLambdaProps) {
+  constructor(scope: Construct, id: string, props: ApiLambdaProps) {
     super(scope, id);
 
     const lambdaPath = path.join(props.buildOutputDir, API_LAMBDA_SUBPATH);

@@ -1,6 +1,7 @@
 import * as path from 'path';
-import * as cloudfront from '@aws-cdk/aws-cloudfront';
-import * as cdk from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import { Construct } from 'constructs';
 import * as fs from 'fs-extra';
 import { NextjsArtifact, ServerlessNextjs } from '../src';
 import { createNextjsExample } from './create-nextjs-example';
@@ -10,7 +11,7 @@ export interface IntegMainLitProps extends cdk.StackProps {
 }
 
 export class IntegMainLit extends cdk.Stack {
-  constructor(scope_: cdk.Construct, props: IntegMainLitProps) {
+  constructor(scope_: Construct, props: IntegMainLitProps) {
     super(scope_, 'cdk-serverless-nextjs-integ-main', props);
 
     const scope = this;

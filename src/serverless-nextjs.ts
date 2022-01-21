@@ -1,6 +1,6 @@
-import * as cloudfront from '@aws-cdk/aws-cloudfront';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as cdk from '@aws-cdk/core';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import { Construct } from 'constructs';
 import { ApiLambda } from './api-lambda';
 import { AssetsDeployment } from './assets-deployment';
 import { DefaultLambda } from './default-lambda';
@@ -26,7 +26,7 @@ export interface ServerlessNextjsCloudFrontConfig {
  * Deploy Next.js as Lambda@Edge.
  * @see https://github.com/serverless-nextjs/serverless-next.js#architecture
  */
-export class ServerlessNextjs extends cdk.Construct {
+export class ServerlessNextjs extends Construct {
   private readonly buildOutputDir: string;
   private readonly bucket: s3.Bucket;
   private readonly defaultLambda: DefaultLambda;
@@ -35,7 +35,7 @@ export class ServerlessNextjs extends cdk.Construct {
   private readonly incrementalStaticRegeneration?: IncrementalStaticRegeneration;
   private readonly apiLambda: ApiLambda;
 
-  constructor(scope: cdk.Construct, id: string, props: ServerlessNextjsProps) {
+  constructor(scope: Construct, id: string, props: ServerlessNextjsProps) {
     super(scope, id);
 
     this.buildOutputDir = props.nextjsArtifact._bind().buildOutputDir;

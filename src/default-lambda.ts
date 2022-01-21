@@ -1,9 +1,10 @@
 import * as path from 'path';
-import * as cloudfront from '@aws-cdk/aws-cloudfront';
-import * as cloudfront_origins from '@aws-cdk/aws-cloudfront-origins';
-import * as lambda from '@aws-cdk/aws-lambda';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as cdk from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import * as cloudfront_origins from 'aws-cdk-lib/aws-cloudfront-origins';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import { Construct } from 'constructs';
 import { DEFAULT_LAMBDA_SUBPATH, NEXTJS_LAMBDA_RUNTIME } from './constants';
 import { IncrementalStaticRegeneration } from './incremental-static-regeneration';
 import { LambdaAtEdgeRole } from './lambda-at-edge-role';
@@ -14,12 +15,12 @@ export interface DefaultLambdaProps {
   readonly buildOutputDir: string;
 }
 
-export class DefaultLambda extends cdk.Construct {
+export class DefaultLambda extends Construct {
   public readonly defaultLambda: lambda.Function;
   private readonly origin: cloudfront_origins.S3Origin;
   private readonly cachePolicy: cloudfront.ICachePolicy;
 
-  constructor(scope: cdk.Construct, id: string, props: DefaultLambdaProps) {
+  constructor(scope: Construct, id: string, props: DefaultLambdaProps) {
     super(scope, id);
 
     this.origin = new cloudfront_origins.S3Origin(props.bucket);

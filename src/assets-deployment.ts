@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as s3_deployment from '@aws-cdk/aws-s3-deployment';
-import * as cdk from '@aws-cdk/core';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as s3_deployment from 'aws-cdk-lib/aws-s3-deployment';
+import { Construct } from 'constructs';
 import { ASSETS_SUBPATH } from './constants';
 
 export interface AssetsDeploymentProps {
@@ -13,8 +13,8 @@ export interface AssetsDeploymentProps {
 }
 
 /** Deploys Next.js assets */
-export class AssetsDeployment extends cdk.Construct {
-  constructor(scope: cdk.Construct, id: string, props: AssetsDeploymentProps) {
+export class AssetsDeployment extends Construct {
+  constructor(scope: Construct, id: string, props: AssetsDeploymentProps) {
     super(scope, id);
 
     for (const config of ASSET_DEPLOYMENT_CONFIGS) {
