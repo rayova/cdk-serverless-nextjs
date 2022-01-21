@@ -1,9 +1,10 @@
 import * as path from 'path';
-import * as lambda from '@aws-cdk/aws-lambda';
-import * as lambda_es from '@aws-cdk/aws-lambda-event-sources';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as sqs from '@aws-cdk/aws-sqs';
-import * as cdk from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as lambda_es from 'aws-cdk-lib/aws-lambda-event-sources';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as sqs from 'aws-cdk-lib/aws-sqs';
+import { Construct } from 'constructs';
 import { NEXTJS_LAMBDA_RUNTIME, REGENERATION_LAMBDA_SUBPATH } from './constants';
 import { hasManifest } from './has-manifest';
 import { LambdaAtEdgeRole } from './lambda-at-edge-role';
@@ -16,13 +17,13 @@ export interface IncrementalStaticRegenerationProps {
 }
 
 /** Creates a queue-driven incremental static regeneration lambda. */
-export class IncrementalStaticRegeneration extends cdk.Construct {
+export class IncrementalStaticRegeneration extends Construct {
   /** The queue that drives regeneration */
   public readonly regenerationQueue?: sqs.Queue;
   /** The regeneration function */
   public readonly regenerationFunction?: lambda.Function;
 
-  constructor(scope: cdk.Construct, id: string, props: IncrementalStaticRegenerationProps) {
+  constructor(scope: Construct, id: string, props: IncrementalStaticRegenerationProps) {
     super(scope, id);
 
     const lambdaPath = path.join(props.buildOutputDir, REGENERATION_LAMBDA_SUBPATH);

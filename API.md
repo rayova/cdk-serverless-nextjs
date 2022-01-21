@@ -18,7 +18,7 @@ new ServerlessNextjs(scope: Construct, id: string, props: ServerlessNextjsProps)
 
 ##### `scope`<sup>Required</sup> <a name="@rayova/cdk-serverless-nextjs.ServerlessNextjs.parameter.scope"></a>
 
-- *Type:* [`@aws-cdk/core.Construct`](#@aws-cdk/core.Construct)
+- *Type:* [`constructs.Construct`](#constructs.Construct)
 
 ---
 
@@ -105,7 +105,7 @@ const serverlessNextjsCloudFrontConfig: ServerlessNextjsCloudFrontConfig = { ...
 public readonly additionalBehaviors: {[ key: string ]: BehaviorOptions};
 ```
 
-- *Type:* {[ key: string ]: [`@aws-cdk/aws-cloudfront.BehaviorOptions`](#@aws-cdk/aws-cloudfront.BehaviorOptions)}
+- *Type:* {[ key: string ]: [`aws-cdk-lib.aws_cloudfront.BehaviorOptions`](#aws-cdk-lib.aws_cloudfront.BehaviorOptions)}
 
 Additional behaviors.
 
@@ -117,7 +117,7 @@ Additional behaviors.
 public readonly defaultBehavior: BehaviorOptions;
 ```
 
-- *Type:* [`@aws-cdk/aws-cloudfront.BehaviorOptions`](#@aws-cdk/aws-cloudfront.BehaviorOptions)
+- *Type:* [`aws-cdk-lib.aws_cloudfront.BehaviorOptions`](#aws-cdk-lib.aws_cloudfront.BehaviorOptions)
 
 CDN default behavior.
 

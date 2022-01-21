@@ -1,20 +1,9 @@
 const { awscdk } = require('projen');
 
-const cdkDependencies = [
-  '@aws-cdk/aws-s3',
-  '@aws-cdk/aws-s3-deployment',
-  '@aws-cdk/aws-cloudfront',
-  '@aws-cdk/aws-cloudfront-origins',
-  '@aws-cdk/aws-iam',
-  '@aws-cdk/aws-lambda',
-  '@aws-cdk/aws-lambda-event-sources',
-  '@aws-cdk/aws-sqs',
-  '@aws-cdk/core',
-];
 const project = new awscdk.AwsCdkConstructLibrary({
   author: 'Josh Kellendonk',
   authorAddress: 'josh@rayova.com',
-  cdkVersion: '1.95.2',
+  cdkVersion: '2.8.0',
   defaultReleaseBranch: 'main',
   name: '@rayova/cdk-serverless-nextjs',
   repositoryUrl: 'https://github.com/rayova/cdk-serverless-nextjs.git',
@@ -45,10 +34,6 @@ const project = new awscdk.AwsCdkConstructLibrary({
   },
 
   workflowNodeVersion: '14',
-
-  cdkDependenciesAsDeps: false,
-  cdkDependencies: cdkDependencies, // Created as peer deps
-  cdkTestDependencies: cdkDependencies, // Duplicate into dev deps
 
   bundledDeps: [
     'fs-extra',

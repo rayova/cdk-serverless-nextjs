@@ -1,9 +1,10 @@
-import * as cloudfront from '@aws-cdk/aws-cloudfront';
-import * as cdk from '@aws-cdk/core';
+import * as cdk from 'aws-cdk-lib';
+import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
+import { Construct } from 'constructs';
 import { NextjsArtifact, ServerlessNextjs } from '../src';
 
 export class SnapshotEmptyArtifact extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props: cdk.StackProps = {}) {
+  constructor(scope: Construct, id: string, props: cdk.StackProps = {}) {
     super(scope, id, props);
 
     const serverlessNextjs = new ServerlessNextjs(this, 'ServerlessNextJs', {
@@ -13,6 +14,5 @@ export class SnapshotEmptyArtifact extends cdk.Stack {
     new cloudfront.Distribution(this, 'Distribution', {
       ...serverlessNextjs.cloudFrontConfig,
     });
-
   }
 }
