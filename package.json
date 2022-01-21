@@ -29,7 +29,7 @@
     "upgrade": "npx projen upgrade",
     "watch": "npx projen watch",
     "projen": "npx projen",
-    "integ:main": "cdk --app \"ts-node -P tsconfig.jest.json test/integ.main.lit.ts\""
+    "integ:main": "cdk --app \"ts-node -P tsconfig.dev.json test/integ.main.lit.ts\""
   },
   "author": {
     "name": "Josh Kellendonk",

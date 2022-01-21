@@ -84,7 +84,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   // release: undefined,                /* Add release management to this project. */
 });
 
-project.package.setScript('integ:main', 'cdk --app "ts-node -P tsconfig.jest.json test/integ.main.lit.ts"');
+project.package.setScript('integ:main', 'cdk --app "ts-node -P tsconfig.dev.json test/integ.main.lit.ts"');
 
 const ignores = [
   '/.idea',
