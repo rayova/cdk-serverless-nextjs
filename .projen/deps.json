@@ -1,6 +1,51 @@
 {
   "dependencies": [
     {
+      "name": "@aws-cdk/aws-cloudfront-origins",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-cloudfront",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-iam",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-lambda-event-sources",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-lambda",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-s3-deployment",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-s3",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/aws-sqs",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
+      "name": "@aws-cdk/core",
+      "version": "^1.95.2",
+      "type": "build"
+    },
+    {
       "name": "@types/fs-extra",
       "type": "build"
     },
