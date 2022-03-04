@@ -59,7 +59,7 @@
     "json-schema": "^0.4.0",
     "markmac": "^0.1",
     "npm-check-updates": "^12",
-    "projen": "^0.52.52",
+    "projen": "^0.52.53",
     "shx": "^0.3.4",
     "standard-version": "^9",
     "ts-jest": "^27.1.3",
